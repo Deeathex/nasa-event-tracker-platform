@@ -1,4 +1,5 @@
 import {HttpHeaders, HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {EventStatus} from '../models/models';
 
 const baseUrl = 'http://localhost:8080/nasa-natural-event-tracker';
@@ -9,7 +10,8 @@ function eventsForCategory(id: string) {
   return `${categoriesUrl}/${id}/events`;
 }
 
-export class Service {
+@Injectable()
+export class EventService {
   httpHeaders: HttpHeaders;
 
   constructor(private http: HttpClient) {
@@ -30,6 +32,6 @@ export class Service {
   }
 
   getEventsForCategory(categoryId: string) {
-    return this.http.get(eventsForCategory(categoryId), { headers: this.httpHeaders });
+    return this.http.get(eventsForCategory(categoryId), {headers: this.httpHeaders});
   }
 }
