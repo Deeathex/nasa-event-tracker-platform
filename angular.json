@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "nasa-natural-event-tracker-platform"
+    }
+  },
+  "defaultProject": "nasa-natural-event-tracker-platform",
+  "cli": {
+    "analytics": false
+  }
 }
