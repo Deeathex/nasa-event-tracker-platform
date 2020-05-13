@@ -43,9 +43,62 @@ p {
   display: flex;
   margin: 82px auto 32px;
   padding: 0 16px;
-  max-width: 960px;
   flex-direction: column;
   align-items: center;
+}
+
+.main-title {
+  max-width: 960px;
+}
+
+.div-main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+  width: 100%;
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
+.div-input {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 30;
+  margin-right: 100px;
+  gap: 20px;
+}
+
+.div-output {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 70;
+}
+
+.div-category {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.div-input-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.div-input-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+}
+
+label {
+  font-weight: bold;
 }
 
 .card svg.material-icons path {
@@ -58,7 +111,7 @@ p {
   background-color: #fafafa;
   height: 40px;
   width: 200px;
-  margin: 0 8px 16px;
+  margin: 0 8px 64px;
   padding: 16px;
   display: flex;
   flex-direction: row;
