@@ -7,153 +7,6 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<style>
-  :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    color: #333;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 8px 0;
-  }
-
-  p {
-    margin: 0;
-  }
-
-  .content {
-    display: flex;
-    margin: 82px auto 32px;
-    padding: 0 16px;
-    max-width: 960px;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .card svg.material-icons path {
-    fill: #888;
-  }
-
-  .card {
-    border-radius: 4px;
-    border: 1px solid #eee;
-    background-color: #fafafa;
-    height: 40px;
-    width: 200px;
-    margin: 0 8px 16px;
-    padding: 16px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s ease-in-out;
-    line-height: 24px;
-  }
-
-  .card.card-small {
-    height: 16px;
-    width: 168px;
-  }
-
-  .card.highlight-card {
-    background-color: #1976d2;
-    color: white;
-    font-weight: 600;
-    border: none;
-    width: auto;
-    min-width: 30%;
-    position: relative;
-  }
-
-  .card.card.highlight-card span {
-    margin-left: 60px;
-  }
-
-  svg#rocket {
-    width: 80px;
-    position: absolute;
-    left: -10px;
-    top: -24px;
-  }
-
-  textarea#query-textarea {
-    background-color: #eeeeee;
-  }
-
-  svg#rocket-smoke {
-    height: calc(100vh - 95px);
-    position: absolute;
-    top: 10px;
-    right: 180px;
-    z-index: -10;
-  }
-
-  a,
-  a:visited,
-  a:hover {
-    color: #1976d2;
-    text-decoration: none;
-  }
-
-  a:hover {
-    color: #125699;
-  }
-
-  footer {
-    margin-top: 8px;
-    display: flex;
-    align-items: center;
-    line-height: 20px;
-  }
-
-  footer a {
-    display: flex;
-    align-items: center;
-  }
-
-  svg#clouds {
-    position: fixed;
-    bottom: -160px;
-    left: -230px;
-    z-index: -10;
-    width: 1920px;
-  }
-
-
-  /* Responsive Styles */
-  @media screen and (max-width: 767px) {
-    .card:not(.highlight-card) {
-      height: 16px;
-      margin: 8px 0;
-    }
-
-    .card.highlight-card span {
-      margin-left: 72px;
-    }
-
-    svg#rocket-smoke {
-      right: 120px;
-      transform: rotate(-5deg);
-    }
-  }
-
-  @media screen and (max-width: 575px) {
-    svg#rocket-smoke {
-      display: none;
-      visibility: hidden;
-    }
-  }
-</style>
-
 <div class="content" role="main">
 
   <!-- Highlight Card -->
@@ -185,56 +38,68 @@
     </svg>
 
   </div>
-
-  <div>
-    <br>
-  </div>
   <!--Content -->
-  <textarea id="query-textarea" rows="10" cols="100"> </textarea>
 
   <table>
     <tr>
       <td>
+        <br>
+        <br>
         <form>
           <!--First column -->
+          <textarea id="query-textarea" rows="10" cols="50"> {{query}} </textarea>
+
           <div>
             <div class="form-group">
               <label for="event-types">Event type:</label>
               <select class="form-control" id="event-types" required>
-                <option *ngFor="let eventType of eventTypes" [value]="eventType">{{eventType}}</option>
+                <option *ngFor="let eventType of eventTypes" [value]="eventType"
+                        (click)="setEventType(eventType)">{{eventType}}</option>
               </select>
             </div>
 
             <br>
             <div>
-              <label for="prior-days">Number of prior days: </label>
-              <input type="number" id="prior-days" name="prior-days" min="0" max="1000" [defaultValue]="0">
+              <label for="prior-days">Number of affected places: </label> <br>
+              <input type="number" id="affected-places" name="affected-places" min="0" max="1000"
+                     [(ngModel)]="this.numberOfAffectedPlacesQueryValue" (ngModelChange)="updateQuery()"/>
+            </div>
+
+            <br>
+            <div>
+              <label for="prior-days">Number of prior days: </label> <br>
+              <input type="number" id="prior-days" name="prior-days" min="0" max="1000"
+                     [(ngModel)]="this.rangeQueryValue" (ngModelChange)="updateQuery()"/>
             </div>
 
             <div class="form-group">
               <label for="category">Category</label>
               <select class="form-control" id="category" required>
-                <option value="All"> All</option>
-                <option *ngFor="let category of categories" [value]="category.title">{{category.title}}</option>
+                <option value="All" (click)="showDescription(-1)"> All</option>
+                <option *ngFor="let category of categories" [value]="category.title"
+                        (click)="showDescription(category.id)">{{category.title}}</option>
               </select>
             </div>
 
             <label> Category description: </label>
             <br>
             <div>
-              <textarea readonly id="category-description" rows="5" cols="50"> </textarea>
+              <textarea readonly id="category-description" rows="5" cols="50"> {{categoryDescription}} </textarea>
             </div>
 
           </div>
           <br>
-          <button type="submit" class="btn btn-success">Query</button>
+          <button type="submit" class="button" (click)="startQuery()">Start query</button>
+          <button type="submit" class="button button3" (click)="stopQuery()">Stop query</button>
 
         </form>
       </td>
       <td>
         <!--Second column -->
         <div>
-
+          <br>
+          <textarea *ngIf="showTable" readonly id="query-response" rows="37"
+                    cols="50"> {{categoryDescription}} </textarea>
         </div>
       </td>
     </tr>

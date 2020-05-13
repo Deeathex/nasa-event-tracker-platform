@@ -1,7 +1,7 @@
 export enum EventStatus {
-  open,
-  closed,
-  all,
+  open = 'open',
+  closed = 'closed',
+  all = 'all'
 }
 
 export interface Category {

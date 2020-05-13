@@ -28,7 +28,7 @@ export class EventService {
 
   fetchAllEvents(status: EventStatus, priorDays: number, affectedPlacesNo: number) {
     // tslint:disable-next-line:max-line-length
-    return this.http.get(`${eventsUrl}?status=${status}?priorDays=${priorDays}?affectedPlacesNo=${affectedPlacesNo}`, {headers: this.httpHeaders});
+    return this.http.get(`${eventsUrl}?status=${status}&priorDays=${priorDays}&affectedPlacesNo=${affectedPlacesNo}`, {headers: this.httpHeaders});
   }
 
   getEventsForCategory(categoryId: string) {
