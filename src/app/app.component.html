@@ -96,8 +96,8 @@
     <!--Second column -->
     <div class="div-output">
       <label>Output query: </label>
-      <textarea *ngIf="showTable" readonly id="query-response"
-                style="display: flex; height: 84%;"> {{categoryDescription}} </textarea>
+      <textarea readonly id="query-response"
+                style="display: flex; height: 84%;"> {{this.events | json}} </textarea>
     </div>
   </div>
 
