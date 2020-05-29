@@ -30,17 +30,13 @@ export class AppComponent implements OnInit {
     this.eventService.fetchAllCategories().subscribe((categories: Category[]) => this.categories = categories);
   }
 
-  getEvents = () => {
-    this.eventService.fetchAllEvents(EventStatus.closed, 0, 0).subscribe((events: Event[]) => this.events = events);
-  }
-
   getStreamingEvents = (status, priorDays, affectedPlaceNo) => {
     this.eventService.fetchAllStreamingEvents(status, priorDays, affectedPlaceNo).subscribe((events: Event[]) => this.events = events);
   }
 
   getStreamingEventsWithinCategory = (categoryId, status, priorDays, affectedPlaceNo) => {
     this.eventService.fetchAllStreamingEventsWithinCategory(categoryId, status, priorDays, affectedPlaceNo)
-      .subscribe((events: Event[]) => this.events = events);
+      .subscribe((event: Event) => this.events.push(event));
   }
 
   ngOnInit(): void {
@@ -50,14 +46,10 @@ export class AppComponent implements OnInit {
     for (const eventStatus in EventStatus) {
       this.eventTypes.push(eventStatus);
     }
-
-    this.getEvents();
-    console.log(this.events);
   }
 
   showDescription = (categoryId) => {
     let category: Category;
-    console.log('Am intrat');
     if (categoryId !== -1) {
       category = this.categories.filter((c) => c.id == categoryId)[0];
       this.categoryDescription = category.description;
@@ -90,13 +82,7 @@ export class AppComponent implements OnInit {
       this.getStreamingEventsWithinCategory(this.categoryIdQueryValue, this.eventStatusQueryValue,
         this.rangeQueryValue, this.numberOfAffectedPlacesQueryValue);
     }
-    console.log(this.events);
-    // this.events = this.eventService.fetchAllEventsOboe();
-    // this.getEvents();
-    // this.showQueryResult = true;
-    // this.getStreamingEvents();
-    // this.getEvents();
-    // this.streamEvents.concat(this.events);
+    // this.eventService.fetchAllEventsOboe().subscribe((event: Event) => {console.log(event); this.events.push(event); });
   }
 
   stopQuery = () => {

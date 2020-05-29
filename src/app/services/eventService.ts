@@ -48,15 +48,16 @@ export class EventService {
   }
 
   fetchAllEventsOboe() {
-    return Observable.create(subscriber => {
-      const oboe = Oboe('http://localhost:8080/nasa-natural-event-tracker/stream/events')
-        .start((status, headers) => {
+    console.log('Am intrat in fetchAllEventsOboe');
+    return new Observable(subscriber => {
+      const oboe = Oboe('http://localhost:8080/nasa-natural-event-tracker/stream/events?status=open&priorDays=30&affectedPlacesNo=0')
+        .start((status) => {
           if (status < 200 || status >= 300) {
             oboe.abort();
-            subscriber.error(status, headers);
           }
         })
         .fail(error => {
+          console.log('Eroare' + error.toString());
           subscriber.error(error);
         })
         .node(node => {
